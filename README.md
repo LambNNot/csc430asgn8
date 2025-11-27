@@ -1,3 +1,10 @@
+## Assignment 8 Details
+
+**GOAL**: Recreate SHEQ4 in COBOL
+
+Note, since COBOL does not have anything like Racket's "Symbols" or "S-expressions", we will simply be parsing strings. Everything else should (hopefully...) be similar in concept?
+
+**REMINDER**: Finishing the project is **not** required for a passing grade. The final grade on this assignment is dependent on the presentation of our learnings of COBOL while working on this assignment!
 
 ## Set Up
 
