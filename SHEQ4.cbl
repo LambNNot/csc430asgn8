@@ -24,6 +24,14 @@
            EVALUATE AST-TYPE
             WHEN "N"
                 MOVE VAL TO INTERP-RESULT-NUM
+            WHEN "I"
+               continue
+            WHEN "S"
+                CONTINUE
+            WHEN "If"
+                CONTINUE
+            WHEN "A"
+                CONTINUE
             WHEN OTHER
                 CONTINUE
            END-EVALUATE.

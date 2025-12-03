@@ -7,6 +7,13 @@
        01  INPUT-NUMC REDEFINES INPUT-AST.
            05 FILLER PIC X(40).
            05 INPUT-VAL PIC S9(5)V99999.
+       01  INPUT-IDC REDEFINES INPUT-AST.
+      *    Essentially the same as input-str
+           05 FILLER PIC X(40).
+           05 INPUT-SYM PIC X(10).
+       01  INPUT-STR REDEFINES INPUT-AST.
+           05 FILLER PIC X(40).
+           05 INPUT-STRING PIC X(10).
        01  INPUT-TYPE PIC X(2).
        01  WS-ACTUAL-RES PIC S9(5)V99999.
        01  WS-EXPECTED-RES PIC S9(5)V99999.
@@ -16,6 +23,8 @@
 
        PROCEDURE DIVISION.
            PERFORM TEST-INTERP-NUMC-1.
+           PERFORM TEST-INTERP-IDC-1.
+           PERFORM TEST-INTERP-STRC-1.
            PERFORM SHOW-TEST-RESULTS.
            STOP RUN.
 
@@ -33,6 +42,38 @@
            MOVE -3.14159
                TO INPUT-VAL.
            MOVE "N" TO INPUT-TYPE.
+           CALL 'SHEQ4' USING
+               INPUT-AST,
+               INPUT-TYPE,
+               WS-ACTUAL-RES.
+           IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
+               ADD 1 TO WS-PASS-COUNT
+            ELSE
+               ADD 1 TO WS-FAIL-COUNT
+           END-IF.
+
+       TEST-INTERP-IDC-1.
+           MOVE "TEST" TO WS-EXPECTED-RES
+           ADD 1 TO WS-TEST-COUNT.
+           MOVE "TEST"
+               TO INPUT-SYM.
+           MOVE "I" TO INPUT-TYPE.
+           CALL 'SHEQ4' USING
+               INPUT-AST,
+               INPUT-TYPE,
+               WS-ACTUAL-RES.
+           IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
+               ADD 1 TO WS-PASS-COUNT
+            ELSE
+               ADD 1 TO WS-FAIL-COUNT
+           END-IF.
+
+       TEST-INTERP-STRC-1.
+           MOVE "DEFNOTSYM" TO WS-EXPECTED-RES
+           ADD 1 TO WS-TEST-COUNT.
+           MOVE "DEFNOTSYM"
+               TO INPUT-STR.
+           MOVE "S" TO INPUT-TYPE.
            CALL 'SHEQ4' USING
                INPUT-AST,
                INPUT-TYPE,
