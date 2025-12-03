@@ -7,13 +7,15 @@
            05 FILLER PIC X(1).
        *> Cannot pictures must have > 0 space
        01  CORE-NUMBER REDEFINES CORE-EXPRESSION.
-           05 VAL PIC 9(7).
+           05 VAL PIC 9.
        01  CORE-ID REDEFINES CORE-EXPRESSION.
-           05 SYM PIC X(3).
+           05 SYM PIC X.
        01  CORE-STRING REDEFINES CORE-EXPRESSION.
-           05 STR PIC X(45).
+           05 STR PIC X.
 
        PROCEDURE DIVISION.
-           DISPLAY "Hello World!".
+           Move 'Hello World' to VAL
+           DISPLAY "    Hello World!".
+           MOVE ''
            STOP RUN.
            
