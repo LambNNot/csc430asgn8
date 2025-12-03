@@ -10,8 +10,10 @@
 
        LINKAGE SECTION.
        01  ABS-SYN-TREE PIC X(50).
+       01  NUMC REDEFINES ABS-SYN-TREE.
+           05 FILLER PIC
+           05 VAL
        01  AST-TYPE PIC X(2).
-           88 AST-IS-NUMC VALUE "N".
       *> "if AST-TYPE == N:" --> "if AST-IS-NUMC" 
        01  INTERP-RES-NUM PIC 9(5).
 
