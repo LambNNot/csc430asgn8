@@ -1,0 +1,27 @@
+       IDENTIFICATION DIVISION.
+       PROGRAM-ID. test-interp.
+
+       DATA DIVISION.
+       WORKING-STORAGE SECTION.
+       01  WS-INPUT PIC X(50).
+       01  WS-INPUT-TYPE PIC X(2).
+       01  WS-ACTUAL-RES-NUM PIC 9(5).
+       01  WS-EXPECTED-RES-NUM PIC 9(5).
+       01  WS-TEST-COUNT PIC 9(2) VALUE ZEROS.
+       01  WS-PASS-COUNT PIC 9(2) VALUE ZEROS.
+       01  WS-FAIL-COUNT PIC 9(2) VALUE ZEROS.
+
+       PROCEDURE DIVISION.
+           PERFORM TEST-INTERP-1.
+           STOP RUN.
+
+       TEST-INTERP-1.
+           ADD 1 TO WS-TEST-COUNT.
+           MOVE "TEST" TO WS-INPUT.
+           MOVE "N" TO WS-INPUT-TYPE.
+           CALL 'SHEQ4' USING WS-INPUT, WS-INPUT-TYPE
+               RETURNING WS-ACTUAL-RES-NUM.
+
+       END PROGRAM test-interp.
+           
+       
