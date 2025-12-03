@@ -11,25 +11,24 @@
        LINKAGE SECTION.
        01  ABS-SYN-TREE PIC X(50).
        01  NUMC REDEFINES ABS-SYN-TREE.
-           05 FILLER PIC
-           05 VAL
+           05 FILLER PIC X(40).
+           05 VAL PIC S9(5)V99999.
        01  AST-TYPE PIC X(2).
-      *> "if AST-TYPE == N:" --> "if AST-IS-NUMC" 
-       01  INTERP-RES-NUM PIC 9(5).
+       01  INTERP-RESULT PIC X(10).
+       01  INTERP-RESULT-NUM
+               REDEFINES INTERP-RESULT PIC S9(5)V99999.
 
-       PROCEDURE DIVISION USING ABS-SYN-TREE, AST-TYPE
-           RETURNING INTERP-RES-NUM.
+       PROCEDURE DIVISION USING ABS-SYN-TREE, AST-TYPE, INTERP-RESULT.
            DISPLAY "Hello World!".
 
            EVALUATE AST-TYPE
             WHEN "N"
-                DISPLAY "DETECTED NUM"
+                MOVE VAL TO INTERP-RESULT-NUM
             WHEN OTHER
                 CONTINUE
-           END-EVALUATE
+           END-EVALUATE.
            
-           MOVE 1 TO INTERP-RES-NUM.
-           STOP RUN.
+           GOBACK.
 
       *INTERP-NUM.
       *    CONTINUE

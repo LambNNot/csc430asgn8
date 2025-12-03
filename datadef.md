@@ -8,18 +8,26 @@ This documentation details the data layout for every ExprC within this buffer.
     **Strings** - Stored as 10 characters: PIC X(10)
 
 ## NumC
+Input Type: `'N'`
+
 Attributes:
 - `value` (Size 10)
 
 ## IdC
+Input Type: `'I'`
+
 Attributes:
 - `sym` (Size 10)
 
 ## StrC
+Input Type: `'S'`
+
 Attributes:
 - `string` (Size 10)
 
 ## IfC
+Input Type: `'If'`
+
 Attributes:
 - `test` (Size 10)
 - `then` (Size 10)
@@ -31,6 +39,8 @@ Attributes:
 - `body` (???)
 
 ## AppC
+Input Type: `'A'`
+
 Attributes:
 - `name` (Size 10)
 - `args` (Size 10n, n <= 4 and n is the no. of args)
