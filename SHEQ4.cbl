@@ -21,9 +21,11 @@
            05 FILLER PIC X(40).
            05 RESULT-NUM-VAL PIC S9(5)V99999.
        01  ENVR.
-           05 BINDINGS OCCURS 30 TIMES INDEXED BY ENVR-IDX.
+           05 BINDING OCCURS 30 TIMES INDEXED BY ENVR-IDX.
                10 SYMBOLS PIC X(10).
-               10 VALS PIC X(10).
+               10 BOUND-VALS.
+                   15 VAL-TYPES PIC X(1).
+                   15 VALS PIC X(10).
 
        
        PROCEDURE DIVISION USING

@@ -44,3 +44,23 @@ Input Type: `'A'`
 Attributes:
 - `name` (Size 10)
 - `args` (Size 10n, n <= 4 and n is the no. of args)
+
+# Environments & Values
+The environment stores a maximum number of `BINDING`s which map `SYMBOLS` to `BOUND-VALS`. `BOUND-VALS` Represent the value bounded to the symbol and consists of two attributes:
+1. `VAL-TYPES` - A single character denoting the type of the value
+2. `VALS` - The value itself (Max 10 characters)
+
+For example, the primitive operation of addition is stored in the top-level environment as element 1 and is represented by:
+```
+SYMBOLS(1) = "+"
+VAL-TYPES(1) = "P"
+VALS(1) = "+"
+```
+
+Below are all the suffixes for each value type:
+```
+- 'P' (Used for Primitives)
+- 'B' (Used for Booleans)
+- 'N' (Used for Numbers, refer to the above Data Formats for constraints)
+- 'C' (Used for Closures)
+```

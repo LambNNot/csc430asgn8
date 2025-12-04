@@ -35,9 +35,12 @@
        01  CURR-ENVR.
            05 BINDING OCCURS 30 TIMES INDEXED BY ENVR-IDX.
                10 SYMBOLS PIC X(10).
-               10 VALS PIC X(10).
+               10 BOUND-VALS.
+                   15 VAL-TYPES PIC X(1).
+                   15 VALS PIC X(10).
 
        PROCEDURE DIVISION.
+           PERFORM SET-TOP-ENV.
            PERFORM TEST-INTERP-NUMC-1.
            PERFORM TEST-INTERP-IDC-1.
            PERFORM TEST-INTERP-STRC-1.
@@ -107,6 +110,12 @@
                ADD 1 TO WS-FAIL-COUNT
            END-IF.
 
-       END PROGRAM test-interp.
+       SET-TOP-ENV.
+           DISPLAY "Setting up top environment...".
+           MOVE "+" TO SYMBOLS(1).
+           MOVE "P: +" TO VALS(1).
            
+
+
+       END PROGRAM test-interp.
        
