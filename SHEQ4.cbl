@@ -20,8 +20,17 @@
        01  INTERP-RESULT-NUM REDEFINES INTERP-RESULT.
            05 FILLER PIC X(40).
            05 RESULT-NUM-VAL PIC S9(5)V99999.
+       01  ENVR.
+           05 BINDINGS OCCURS 30 TIMES INDEXED BY ENVR-IDX.
+               10 SYMBOLS PIC X(10).
+               10 VALS PIC X(10).
 
-       PROCEDURE DIVISION USING ABS-SYN-TREE, AST-TYPE, INTERP-RESULT.
+       
+       PROCEDURE DIVISION USING
+               ABS-SYN-TREE,
+               AST-TYPE,
+               ENVR,
+               INTERP-RESULT.
 
            EVALUATE AST-TYPE
             WHEN "N"
@@ -31,7 +40,6 @@
                     SYM DELIMITED BY SIZE 
                     INTO ERROR-DESC
                PERFORM RAISE-ERROR
-               
             WHEN "S"
                 CONTINUE
             WHEN "If"

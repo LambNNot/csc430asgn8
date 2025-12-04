@@ -14,7 +14,7 @@
        01  INPUT-STR REDEFINES INPUT-AST.
            05 FILLER PIC X(40).
            05 INPUT-STRING PIC X(10).
-           
+
        01  INPUT-TYPE PIC X(2).
 
        01  WS-ACTUAL-RES PIC X(50).
@@ -31,6 +31,11 @@
        01  WS-TEST-COUNT PIC 9(2) VALUE ZEROS.
        01  WS-PASS-COUNT PIC 9(2) VALUE ZEROS.
        01  WS-FAIL-COUNT PIC 9(2) VALUE ZEROS.
+
+       01  CURR-ENVR.
+           05 BINDING OCCURS 30 TIMES INDEXED BY ENVR-IDX.
+               10 SYMBOLS PIC X(10).
+               10 VALS PIC X(10).
 
        PROCEDURE DIVISION.
            PERFORM TEST-INTERP-NUMC-1.
@@ -56,6 +61,7 @@
            CALL 'SHEQ4' USING
                INPUT-AST,
                INPUT-TYPE,
+               CURR-ENVR,
                WS-ACTUAL-RES.
            IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
                ADD 1 TO WS-PASS-COUNT
@@ -73,6 +79,7 @@
            CALL "SHEQ4" USING
                INPUT-AST,
                INPUT-TYPE,
+               CURR-ENVR,
                WS-ACTUAL-RES.
            IF IS-SHEQ-ERROR THEN
                ADD 1 TO WS-PASS-COUNT
@@ -82,6 +89,7 @@
            END-IF.
 
        TEST-INTERP-STRC-1.
+      *    Check for unbound identifier
            MOVE "DEFNOTSYM" TO WS-EXPECTED-RES
            ADD 1 TO WS-TEST-COUNT.
            MOVE "DEFNOTSYM"
@@ -90,6 +98,7 @@
            CALL 'SHEQ4' USING
                INPUT-AST,
                INPUT-TYPE,
+               CURR-ENVR,
                WS-ACTUAL-RES.
            IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
                ADD 1 TO WS-PASS-COUNT
