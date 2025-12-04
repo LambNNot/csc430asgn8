@@ -113,7 +113,48 @@
        SET-TOP-ENV.
            DISPLAY "Setting up top environment...".
            MOVE "+" TO SYMBOLS(1).
-           MOVE "P: +" TO VALS(1).
+           MOVE "P" TO VAL-TYPES(1).
+           MOVE "+" TO VALS(1).
+
+           MOVE "-" TO SYMBOLS(2).
+           MOVE "P" TO VAL-TYPES(2).
+           MOVE "-" TO VALS(2).
+
+           MOVE "*" TO SYMBOLS(3).
+           MOVE "P" TO VAL-TYPES(3).
+           MOVE "*" TO VALS(3).
+
+           MOVE "/" TO SYMBOLS(4).
+           MOVE "P" TO VAL-TYPES(4).
+           MOVE "/" TO VALS(4).
+
+           MOVE "<=" TO SYMBOLS(5).
+           MOVE "P" TO VAL-TYPES(5).
+           MOVE "<=" TO VALS(5).
+
+           MOVE "substring" TO SYMBOLS(6).
+           MOVE "P" TO VAL-TYPES(6).
+           MOVE "substring" TO VALS(6).
+
+           MOVE "strlen" TO SYMBOLS(7).
+           MOVE "P" TO VAL-TYPES(7).
+           MOVE "strlen" TO VALS(7).
+
+           MOVE "equal?" TO SYMBOLS(8).
+           MOVE "P" TO VAL-TYPES(8).
+           MOVE "equal?" TO VALS(8).
+
+           MOVE "true" TO SYMBOLS(9).
+           MOVE "B" TO VAL-TYPES(9).
+           MOVE "true" TO VALS(9).
+
+           MOVE "false" TO SYMBOLS(10).
+           MOVE "B" TO VAL-TYPES(10).
+           MOVE "false" TO VALS(10).
+
+           MOVE "error" TO SYMBOLS(11).
+           MOVE "P" TO VAL-TYPES(11).
+           MOVE "error" TO VALS(11).
            
 
 
