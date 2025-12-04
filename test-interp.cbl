@@ -14,9 +14,20 @@
        01  INPUT-STR REDEFINES INPUT-AST.
            05 FILLER PIC X(40).
            05 INPUT-STRING PIC X(10).
+           
        01  INPUT-TYPE PIC X(2).
-       01  WS-ACTUAL-RES PIC S9(5)V99999.
-       01  WS-EXPECTED-RES PIC S9(5)V99999.
+
+       01  WS-ACTUAL-RES PIC X(50).
+       01  ERROR-MSG REDEFINES WS-ACTUAL-RES.
+           05 SHEQ-LABEL PIC X(10).
+               88 IS-SHEQ-ERROR VALUE "SHEQ ERROR".
+           05 REST PIC X(40).
+
+       01  WS-EXPECTED-RES PIC X(50).
+       01  WS-EXPECTED-RES-NUM REDEFINES WS-EXPECTED-RES.
+           05 FILLER PIC X(40).
+           05 EXPECTED-NUM PIC S9(5)V99999.
+
        01  WS-TEST-COUNT PIC 9(2) VALUE ZEROS.
        01  WS-PASS-COUNT PIC 9(2) VALUE ZEROS.
        01  WS-FAIL-COUNT PIC 9(2) VALUE ZEROS.
@@ -37,7 +48,7 @@
            DISPLAY WS-FAIL-COUNT.
 
        TEST-INTERP-NUMC-1.
-           MOVE -3.14159 TO WS-EXPECTED-RES
+           MOVE -3.14159 TO EXPECTED-NUM
            ADD 1 TO WS-TEST-COUNT.
            MOVE -3.14159
                TO INPUT-VAL.
@@ -49,6 +60,7 @@
            IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
                ADD 1 TO WS-PASS-COUNT
             ELSE
+               DISPLAY "FAILED TEST-INTERP-NUMC-1"
                ADD 1 TO WS-FAIL-COUNT
            END-IF.
 
@@ -58,14 +70,15 @@
            MOVE "TEST"
                TO INPUT-SYM.
            MOVE "I" TO INPUT-TYPE.
-           CALL 'SHEQ4' USING
+           CALL "SHEQ4" USING
                INPUT-AST,
                INPUT-TYPE,
                WS-ACTUAL-RES.
-           IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
+           IF IS-SHEQ-ERROR THEN
                ADD 1 TO WS-PASS-COUNT
-            ELSE
-               ADD 1 TO WS-FAIL-COUNT
+            ELSE 
+                DISPLAY "FAILED TEST-INTERP-IDC-1"
+                ADD 1 TO WS-FAIL-COUNT
            END-IF.
 
        TEST-INTERP-STRC-1.
@@ -81,6 +94,7 @@
            IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
                ADD 1 TO WS-PASS-COUNT
             ELSE
+                DISPLAY "FAILED TEST-INTERP-STRC-1"
                ADD 1 TO WS-FAIL-COUNT
            END-IF.
 
