@@ -15,8 +15,9 @@
            05 FILLER PIC X(40).
            05 INPUT-STRING PIC X(10).
        01  INPUT-APPC REDEFINES INPUT-AST.
+           05 INPUT-FUNC-TYPE PIC X(10).
            05 INPUT-FUNC PIC X(10).
-           05 INPUT-ARGS PIC X(40).
+           05 INPUT-ARGS PIC X(10) OCCURS 3 TIMES.
        01  INPUT-LAMC REDEFINES INPUT-AST.
            05 INPUT-PARAMS PIC X(40).
            05 INPUT-BODY PIC X(10).
@@ -45,7 +46,7 @@
 
        01  CURR-ENVR.
            05 BINDING OCCURS 30 TIMES INDEXED BY ENVR-IDX.
-               10 SYMBOLS PIC X(10).
+               10 SYMBOLS PIC X(10) VALUE SPACE.
                10 BOUND-VALS.
                    15 VAL-TYPES PIC X(1).
                    15 VALS PIC X(10).
@@ -56,6 +57,7 @@
            PERFORM TEST-INTERP-IDC-1.
            PERFORM TEST-INTERP-IDC-2.
            PERFORM TEST-INTERP-STRC-1.
+           PERFORM TEST-INTERP-PRIM-ADD.
            PERFORM SHOW-TEST-RESULTS.
            STOP RUN.
 
@@ -68,6 +70,7 @@
            DISPLAY WS-FAIL-COUNT.
 
        TEST-INTERP-NUMC-1.
+           PERFORM CLEAR-IO.
            MOVE -3.14159 TO EXPECTED-NUM.
            ADD 1 TO WS-TEST-COUNT.
            MOVE -3.14159
@@ -86,6 +89,7 @@
            END-IF.
 
        TEST-INTERP-IDC-1.
+           PERFORM CLEAR-IO.
            MOVE "TEST" TO WS-EXPECTED-RES.
            ADD 1 TO WS-TEST-COUNT.
            MOVE "TEST"
@@ -104,6 +108,7 @@
            END-IF.
 
        TEST-INTERP-IDC-2.
+           PERFORM CLEAR-IO.
            MOVE "World!" TO WS-EXPECTED-RES.
            ADD 1 TO WS-TEST-COUNT.
            MOVE "Hello" TO SYMBOLS(1).
@@ -124,6 +129,7 @@
            END-IF.
 
        TEST-INTERP-STRC-1.
+           PERFORM CLEAR-IO.
       *    Check for unbound identifier
            MOVE "DEFNOTSYM" TO WS-EXPECTED-RES.
            ADD 1 TO WS-TEST-COUNT.
@@ -143,6 +149,7 @@
            END-IF.
            
        TEST-INTERP-LAMC-1.
+           PERFORM CLEAR-IO.
            MOVE "body" TO EXPECTED-BODY.
            MOVE "x" TO EXPECTED-PARAMS.
            MOVE "body" TO INPUT-BODY.
@@ -157,6 +164,27 @@
                ADD 1 TO WS-PASS-COUNT
             ELSE
                 DISPLAY "FAILED TEST-INTERP-STRC-1"
+               ADD 1 TO WS-FAIL-COUNT
+           END-IF.
+
+       TEST-INTERP-PRIM-ADD.
+           PERFORM CLEAR-IO.
+           MOVE 3 TO EXPECTED-NUM.
+           ADD 1 TO WS-TEST-COUNT.
+           MOVE "P" TO INPUT-FUNC-TYPE.
+           MOVE "+" TO INPUT-FUNC.
+           MOVE "A" TO INPUT-TYPE.
+           MOVE "0000100000" TO  INPUT-ARGS(1).
+           MOVE "0000200000" TO  INPUT-ARGS(2).
+           CALL 'SHEQ4' USING
+               INPUT-AST,
+               INPUT-TYPE,
+               CURR-ENVR,
+               WS-ACTUAL-RES.
+           IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
+               ADD 1 TO WS-PASS-COUNT
+            ELSE
+                DISPLAY "FAILED TEST-INTERP-PRIM-ADD"
                ADD 1 TO WS-FAIL-COUNT
            END-IF.
        
@@ -207,6 +235,11 @@
            MOVE "error" TO SYMBOLS(11).
            MOVE "P" TO VAL-TYPES(11).
            MOVE "error" TO VALS(11).
+
+       CLEAR-IO.
+           MOVE SPACES TO WS-EXPECTED-RES.
+           MOVE SPACES TO WS-ACTUAL-RES.
+           
            
 
 
