@@ -14,6 +14,13 @@
        01  INPUT-STR REDEFINES INPUT-AST.
            05 FILLER PIC X(40).
            05 INPUT-STRING PIC X(10).
+       01  INPUT-APPC REDEFINES INPUT-AST.
+           05 INPUT-FUNC PIC X(10).
+           05 INPUT-ARGS PIC X(40).
+       01  INPUT-LAMC REDEFINES INPUT-AST.
+           05 INPUT-PARAMS PIC X(40).
+           05 INPUT-BODY PIC X(10).
+           
 
        01  INPUT-TYPE PIC X(2).
 
@@ -27,6 +34,10 @@
        01  WS-EXPECTED-RES-NUM REDEFINES WS-EXPECTED-RES.
            05 FILLER PIC X(40).
            05 EXPECTED-NUM PIC S9(5)V99999.
+       01  WS-EXPECTED-RES-CLOV REDEFINES WS-EXPECTED-RES.
+           05 EXPECTED-PARAMS PIC X(40).
+           05 EXPECTED-BODY PIC X(10).
+           *> how do we put environment, no more memory
 
        01  WS-TEST-COUNT PIC 9(2) VALUE ZEROS.
        01  WS-PASS-COUNT PIC 9(2) VALUE ZEROS.
@@ -130,6 +141,26 @@
                 DISPLAY "FAILED TEST-INTERP-STRC-1"
                ADD 1 TO WS-FAIL-COUNT
            END-IF.
+           
+       TEST-INTERP-LAMC-1.
+           MOVE "body" TO EXPECTED-BODY.
+           MOVE "x" TO EXPECTED-PARAMS.
+           MOVE "body" TO INPUT-BODY.
+           MOVE "x" TO INPUT-PARAMS.
+           MOVE "L" TO INPUT-TYPE.
+           CALL 'SHEQ4' USING
+               INPUT-AST,
+               INPUT-TYPE,
+               CURR-ENVR,
+               WS-ACTUAL-RES.
+           IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
+               ADD 1 TO WS-PASS-COUNT
+            ELSE
+                DISPLAY "FAILED TEST-INTERP-STRC-1"
+               ADD 1 TO WS-FAIL-COUNT
+           END-IF.
+       
+       
 
        SET-TOP-ENV.
            DISPLAY "Setting up top environment...".

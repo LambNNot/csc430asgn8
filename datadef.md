@@ -35,8 +35,8 @@ Attributes:
 
 ## LamC (Work-in-Progress)
 Attributes:
-- `parameters` (???)
-- `body` (???)
+- `parameters` (Size 10n, n <= 4 and n is the no. of params) 
+- `body` (Size 10)
 
 ## AppC
 Input Type: `'A'`
