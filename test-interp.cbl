@@ -54,6 +54,7 @@
            PERFORM SET-TOP-ENV.
            PERFORM TEST-INTERP-NUMC-1.
            PERFORM TEST-INTERP-IDC-1.
+           PERFORM TEST-INTERP-IDC-2.
            PERFORM TEST-INTERP-STRC-1.
            PERFORM SHOW-TEST-RESULTS.
            STOP RUN.
@@ -67,7 +68,7 @@
            DISPLAY WS-FAIL-COUNT.
 
        TEST-INTERP-NUMC-1.
-           MOVE -3.14159 TO EXPECTED-NUM
+           MOVE -3.14159 TO EXPECTED-NUM.
            ADD 1 TO WS-TEST-COUNT.
            MOVE -3.14159
                TO INPUT-VAL.
@@ -85,7 +86,7 @@
            END-IF.
 
        TEST-INTERP-IDC-1.
-           MOVE "TEST" TO WS-EXPECTED-RES
+           MOVE "TEST" TO WS-EXPECTED-RES.
            ADD 1 TO WS-TEST-COUNT.
            MOVE "TEST"
                TO INPUT-SYM.
@@ -102,9 +103,29 @@
                 ADD 1 TO WS-FAIL-COUNT
            END-IF.
 
+       TEST-INTERP-IDC-2.
+           MOVE "World!" TO WS-EXPECTED-RES.
+           ADD 1 TO WS-TEST-COUNT.
+           MOVE "Hello" TO SYMBOLS(1).
+           MOVE "S" TO VAL-TYPES(1).
+           MOVE "World!" TO VALS(1).
+           MOVE "Hello" TO INPUT-SYM.
+           MOVE "I" TO INPUT-TYPE.
+           CALL "SHEQ4" USING
+               INPUT-AST,
+               INPUT-TYPE,
+               CURR-ENVR,
+               WS-ACTUAL-RES.
+           IF WS-ACTUAL-RES = WS-EXPECTED-RES THEN
+               ADD 1 TO WS-PASS-COUNT
+            ELSE
+                DISPLAY "FAILED TEST-INTERP-IDC-2"
+                ADD 1 TO WS-FAIL-COUNT
+           END-IF.
+
        TEST-INTERP-STRC-1.
       *    Check for unbound identifier
-           MOVE "DEFNOTSYM" TO WS-EXPECTED-RES
+           MOVE "DEFNOTSYM" TO WS-EXPECTED-RES.
            ADD 1 TO WS-TEST-COUNT.
            MOVE "DEFNOTSYM"
                TO INPUT-STR.

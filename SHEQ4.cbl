@@ -44,8 +44,8 @@
                10 SYMBOLS PIC X(10).
                10 BOUND-VALS.
                    15 VAL-TYPES PIC X(1).
-                   15 VALS PIC X(10).
-       
+                   15 VALS PIC X(10).    
+
        
        PROCEDURE DIVISION USING
                ABS-SYN-TREE,
@@ -57,10 +57,19 @@
             WHEN "N" *> NUMC case
                 MOVE VAL TO RESULT-NUM-VAL
             WHEN "I" *> IDC case
-                STRING "Unbound identifier, received " DELIMITED BY SIZE
-                    SYM DELIMITED BY SIZE 
-                    INTO ERROR-DESC
-               PERFORM RAISE-ERROR
+                SET ENVR-IDX TO 1
+                    SEARCH BINDING
+                    AT END
+                        STRING
+                            "Unbound identifier, received "
+                                DELIMITED BY SIZE
+                            SYM
+                                DELIMITED BY SIZE 
+                            INTO ERROR-DESC
+                       PERFORM RAISE-ERROR
+                    WHEN SYMBOLS(ENVR-IDX) = SYM
+                    MOVE VALS(ENVR-IDX) TO INTERP-RESULT
+                END-SEARCH
             WHEN "S" *> STRC case
                 MOVE STRC-BUFF TO RESULT-STR-VAL
             WHEN "If" *> IFC case
